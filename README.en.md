@@ -43,7 +43,7 @@ git -C ~/.agents/skills/thinkingdata-analysis-entry pull
 3. Type:
 
 ```text
-Please use the thinkingdata-analysis-entry skill and help me start a ThinkingData backend analysis task.
+Please use the thinkingdata-analysis-entry skill. First only verify login state and list visible projects. Do not open SQL yet. Wait for my project, date, metric, and output format before running any query.
 ```
 
 ## What the Skill Does
@@ -53,6 +53,29 @@ Please use the thinkingdata-analysis-entry skill and help me start a ThinkingDat
 - Confirms project and product scope
 - Prefers SQL WebSocket direct execution
 - Falls back to the browser SQL page when needed
+
+## Recommended Start Prompt
+
+Do not start with a vague request like "help me start analysis".
+
+Use this instead:
+
+```text
+Please use the thinkingdata-analysis-entry skill. First only verify login state and list visible projects. Do not open SQL yet. Wait for my project, date, metric, and output format before running any query.
+```
+
+If the target is already known, provide all four items:
+
+- project or product
+- date or date range
+- metric
+- output format
+
+Example:
+
+```text
+Please use the thinkingdata-analysis-entry skill. Project 123, date 2026-04-01, metrics are new users and active users, output as a daily report, and prefer the WebSocket SQL direct-run path.
+```
 
 ## Prerequisites
 

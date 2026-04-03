@@ -43,7 +43,7 @@ git -C ~/.agents/skills/thinkingdata-analysis-entry pull
 3. 输入：
 
 ```text
-请使用 thinkingdata-analysis-entry skill，帮我开始数数后台分析任务。
+请使用 thinkingdata-analysis-entry skill。先只检查登录态和项目列表，不要打开 SQL；等我给你项目、日期、指标后再执行查询。
 ```
 
 ## Skill 能做什么
@@ -53,6 +53,44 @@ git -C ~/.agents/skills/thinkingdata-analysis-entry pull
 - 确认项目和产品范围
 - 优先走 SQL WebSocket 直连
 - 在需要时回退到浏览器 SQL 页
+
+## 推荐启动方式
+
+不要只说“帮我开始分析任务”。
+
+推荐先用这一句：
+
+```text
+请使用 thinkingdata-analysis-entry skill。先只检查登录态和项目列表，不要打开 SQL；等我给你项目、日期、指标后再执行查询。
+```
+
+如果你已经知道目标，直接把四项说清：
+
+- 项目或产品
+- 日期或日期范围
+- 指标
+- 输出格式
+
+例如：
+
+```text
+请使用 thinkingdata-analysis-entry skill。项目 123，日期 2026-04-01，指标是新增和活跃，按日报格式输出；优先走 WebSocket SQL 直连。
+```
+
+## 常见问题
+
+### 打开 SQL 页面后一直没动静
+
+这通常不是 SQL 本身卡住，而是任务定义不完整。
+
+优先检查是否已经明确：
+
+- 项目
+- 日期
+- 指标
+- 输出格式
+
+如果没有全部明确，先不要停留在 SQL 页，回到任务定义层。
 
 ## 使用前提
 

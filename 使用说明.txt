@@ -21,7 +21,7 @@ GitHub 长期使用推荐方式：
 5. 重新打开 Codex
 6. 在对话里输入：
 
-请使用 thinkingdata-analysis-entry skill，帮我开始数数后台分析任务。
+请使用 thinkingdata-analysis-entry skill。先只检查登录态和项目列表，不要打开 SQL；等我给你项目、日期、指标后再执行查询。
 
 说明：
 - 安装目标目录为 ~/.agents/skills/thinkingdata-analysis-entry/
@@ -33,3 +33,8 @@ GitHub 长期使用推荐方式：
   - runbooks/
 - 如果 Codex 已经开着，安装后请新开会话再使用
 - install.command 可能会被 macOS 拦截，install.sh 更稳
+- 不要只说“开始分析”，最好直接补齐：
+  - 项目或产品
+  - 日期或日期范围
+  - 指标
+  - 输出格式

@@ -9,6 +9,8 @@ description: Use when a teammate needs to log into the ThinkingData backend, est
 
 This skill standardizes the first segment of ThinkingData work: login, auth validation, project identification, structure probing, and SQL entry. The core rule is simple: do not start from dashboard readouts; start from project structure and SQL. When SQL is needed, prefer the verified WebSocket direct-run path before falling back to browser-page execution.
 
+This skill is also a stop-loss skill. If the task target is still vague, stop early after auth and project confirmation instead of drifting inside the SQL page.
+
 ## When to Use
 
 - Need to begin a new ThinkingData task from scratch
@@ -45,12 +47,43 @@ Do not use this skill as the final metric-calibration guide for every retention 
 10. Fall back to SQL page + Ace editor only when direct-run is blocked.
 11. If browser-page execution is used, download CSV instead of scraping result tables.
 
+## Execution Gate
+
+Do not enter SQL execution until these four items are explicit or have been confirmed from context:
+
+- `projectId` or exact product scope
+- date or date range and timezone
+- metric or analysis question
+- expected output shape
+
+If any item is missing:
+
+- stop after auth validation
+- summarize the confirmed project scope
+- tell the operator what is still missing
+- wait for the next instruction
+
+Do not open the SQL page just to keep moving. Do not write exploratory SQL when the business target is still undefined.
+
+## Default First-Turn Behavior
+
+If the operator only says things like “帮我开始数数后台分析任务”:
+
+1. Validate login state.
+2. Confirm whether the backend and project switcher are visible.
+3. Summarize known project mappings or visible project candidates.
+4. Decide whether the target project is already documented.
+5. Stop and ask for the missing query target.
+
+In that situation, do not automatically open the SQL page and do not start probing all projects.
+
 ## Core Rules
 
 - Dashboards are for naming map and metric calibration only.
 - Main data path is `project structure -> product identity -> SQL`.
 - Preferred SQL path is `WebSocket direct-run -> result payload`.
 - Browser SQL page is fallback, not default.
+- No explicit task target means no SQL execution.
 - Aggregated projects must be split by product before formal queries.
 - Event-table queries should include `"$part_date"` by default.
 - Do not assume all projects use the same “test user” or “production user” field.
@@ -123,6 +156,7 @@ Treat these mappings as operational hints. Check the current runbook before form
 - Writing SQL before checking project structure
 - Reusing one project’s filter logic on another project
 - Defaulting to browser SQL page when WebSocket direct-run is already available
+- Opening the SQL page before project/date/metric/output are clear
 - Injecting Chinese filter text directly and getting encoding corruption
 - Scraping result tables instead of downloading CSV
 
