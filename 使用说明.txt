@@ -1,0 +1,35 @@
+ThinkingData Skill 使用说明
+
+GitHub 长期使用推荐方式：
+
+1. 直接把仓库 clone 到 skill 目录
+2. 以后直接 git pull 更新
+
+示例：
+
+- ~/.agents/skills/
+  - git clone <repo-url> ~/.agents/skills/thinkingdata-analysis-entry
+- ~/.codex/skills/
+  - git clone <repo-url> ~/.codex/skills/thinkingdata-analysis-entry
+
+如果只是下载压缩包，再使用下面的兼容安装方式：
+
+1. 打开“终端”
+2. 输入 bash 后留一个空格
+3. 把 install.sh 文件直接拖进终端窗口
+4. 按回车执行
+5. 重新打开 Codex
+6. 在对话里输入：
+
+请使用 thinkingdata-analysis-entry skill，帮我开始数数后台分析任务。
+
+说明：
+- 安装目标目录为 ~/.agents/skills/thinkingdata-analysis-entry/
+- 如果你的 Codex 环境使用 ~/.codex/skills/，请执行：
+  - bash install.sh --codex-home
+- 安装时会把整个 skill 目录一起复制，包括：
+  - SKILL.md
+  - scripts/run_sql_via_ws.js
+  - runbooks/
+- 如果 Codex 已经开着，安装后请新开会话再使用
+- install.command 可能会被 macOS 拦截，install.sh 更稳
