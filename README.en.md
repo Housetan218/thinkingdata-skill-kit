@@ -8,9 +8,14 @@ This package distributes the `thinkingdata-analysis-entry` skill to teammates.
   - Recommended terminal installer
 - `install.command`
   - macOS double-click installer, may be blocked by Gatekeeper
-- `thinkingdata-analysis-entry/`
-  - The skill bundle
-  - Includes `SKILL.md`, `scripts/`, and `runbooks/`
+- `SKILL.md`
+  - Skill entry
+- `runbooks/`
+  - Workflow and operating rules
+- `references/`
+  - Project index template, dossier template, SQL template notes, timing log standard, teammate guide
+- `scripts/`
+  - WebSocket SQL runner, project kit scaffolding, timing-log helper
 - `使用说明.txt`
   - Quick Chinese usage note
 
@@ -53,6 +58,32 @@ Please use the thinkingdata-analysis-entry skill. First only verify login state 
 - Confirms project and product scope
 - Prefers SQL WebSocket direct execution
 - Falls back to the browser SQL page when needed
+- Supports dossier-based project initialization
+- Supports reusable SQL template and timing-log discipline
+
+## Browser Use CLI Positioning
+
+Playwright CLI is the default browser executor.
+
+Playwright CLI should handle:
+- primary login-state verification
+- attaching to a reusable real-browser session
+- page entry and recovery
+- browser actions that need stable waits, downloads, logs, or snapshots
+
+Browser Use CLI is a fallback browser-side helper.
+
+Use it for:
+- login-state verification
+- page open and recovery
+- current project/subproject page confirmation
+- lightweight browser actions during initialization
+
+Do not use it for:
+- acting as the default browser executor
+- replacing SQL/SPL execution
+- replacing metric-definition confirmation
+- expecting faster ThinkingData backend runtime
 
 ## Recommended Start Prompt
 
@@ -74,12 +105,12 @@ If the target is already known, provide all four items:
 Example:
 
 ```text
-Please use the thinkingdata-analysis-entry skill. Project 123, date 2026-04-01, metrics are new users and active users, output as a daily report, and prefer the WebSocket SQL direct-run path.
+Please use the thinkingdata-analysis-entry skill. Project <projectId>, date 2026-04-01, metrics are new users and active users, output as a daily report, and prefer the WebSocket SQL direct-run path.
 ```
 
 ## Prerequisites
 
-- You must already be logged into the ThinkingData backend in a real browser
+- You must already have a reusable logged-in browser session for the ThinkingData backend
 - The package does not create a login session for you
 - Tokens are for the current session only and must not be committed
 
@@ -107,6 +138,7 @@ thinkingdata-skill-kit/
 ├── README.zh-CN.md
 ├── install.command
 ├── install.sh
+├── references/
 ├── runbooks/
 ├── scripts/
 └── 使用说明.txt

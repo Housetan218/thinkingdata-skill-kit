@@ -30,9 +30,14 @@ GitHub 长期使用推荐方式：
 - 安装时会把整个 skill 目录一起复制，包括：
   - SKILL.md
   - scripts/run_sql_via_ws.js
+  - scripts/scaffold_project_kit.sh
+  - scripts/record_timing_log.sh
   - runbooks/
+  - references/
 - 如果 Codex 已经开着，安装后请新开会话再使用
 - install.command 可能会被 macOS 拦截，install.sh 更稳
+- Browser Use CLI 只负责浏览器侧辅助，不替代 SQL 主链路
+- Playwright CLI 是默认浏览器执行器；Browser Use CLI 只是 fallback
 - 不要只说“开始分析”，最好直接补齐：
   - 项目或产品
   - 日期或日期范围

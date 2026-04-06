@@ -16,8 +16,11 @@ fi
 
 mkdir -p "${TARGET_DIR}"
 cp "${SRC_DIR}/SKILL.md" "${TARGET_DIR}/SKILL.md"
-mkdir -p "${TARGET_DIR}/scripts" "${TARGET_DIR}/runbooks"
+mkdir -p "${TARGET_DIR}/scripts" "${TARGET_DIR}/runbooks" "${TARGET_DIR}/references"
 cp -R "${SRC_DIR}/scripts/." "${TARGET_DIR}/scripts/"
 cp -R "${SRC_DIR}/runbooks/." "${TARGET_DIR}/runbooks/"
+if [[ -d "${SRC_DIR}/references" ]]; then
+  cp -R "${SRC_DIR}/references/." "${TARGET_DIR}/references/"
+fi
 
 osascript -e 'display dialog "ThinkingData skill 安装完成。\n\n安装位置：'"${TARGET_DIR}"'\n\n下一步：\n1. 重新打开 Codex\n2. 输入：请使用 thinkingdata-analysis-entry skill，帮我开始数数后台分析任务。" buttons {"好的"} default button "好的"'

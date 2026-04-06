@@ -9,6 +9,8 @@
 - 看板只做命名映射和口径校准
 - 主取数路径是 SQL
 - SQL 默认优先走 WebSocket 直连
+- Playwright CLI 是默认浏览器执行层
+- Browser Use CLI 只做浏览器侧 fallback
 - 新项目先探结构，再写正式 SQL
 - 已建档项目不需要每次全量探表
 - 没有明确查询目标时，不进入 SQL 执行
@@ -102,8 +104,32 @@ scripts/run_sql_via_ws.js
 
 ```bash
 TD_ACCESS_TOKEN='<current ACCESS_TOKEN>' \
-node scripts/run_sql_via_ws.js 123 /absolute/path/to/query.sql
+node scripts/run_sql_via_ws.js <project_id> /absolute/path/to/query.sql
 ```
+
+## 3.1 Browser Use CLI 的位置
+
+Playwright CLI 默认优先用于：
+
+- 检查登录态
+- 区分“默认自动化会话未登录”和“真实可复用浏览器会话存在”
+- 打开或恢复 SQL 页
+- 确认当前项目 / 子项目页面状态
+- 需要稳定等待、下载、日志、快照时的页面操作
+
+Browser Use CLI 适合：
+
+- 打开或恢复 SQL 页
+- 确认当前项目 / 子项目页面状态
+- 页面迷路时做轻量点击、切换、读取
+- Playwright 不稳定时的兜底页面检查
+
+Browser Use CLI 不适合：
+
+- 作为默认浏览器执行器
+- 替代 SQL/SPL 主查询
+- 替代项目口径确认
+- 解决服务端执行慢的问题
 
 ## 4. 什么时候需要探表
 
@@ -157,6 +183,23 @@ node scripts/run_sql_via_ws.js 123 /absolute/path/to/query.sql
 详见：
 
 - [performance-baseline.md](performance-baseline.md)
+- [project-workflow.md](project-workflow.md)
+
+## 7. 本地沉淀要求
+
+每次新确认的项目知识都要回写到本地资料中，至少包括：
+
+- 项目索引
+- 项目 dossier
+- SQL 模板库
+- 耗时日志
+
+推荐参考：
+
+- [project-index-template.md](../references/project-index-template.md)
+- [project-dossier-template.md](../references/project-dossier-template.md)
+- [sql-template-library.md](../references/sql-template-library.md)
+- [timing-log-standard.md](../references/timing-log-standard.md)
 ```
 
 执行按钮：
@@ -175,7 +218,7 @@ node scripts/run_sql_via_ws.js 123 /absolute/path/to/query.sql
 
 ### 5.1 单产品项目
 
-适用项目：
+当前已建档样例：
 
 - `101`
 - `123`
@@ -189,9 +232,11 @@ node scripts/run_sql_via_ws.js 123 /absolute/path/to/query.sql
 - 先用主包值过滤或校准
 - 再查新增、活跃、留存、收入、国家分布等
 
+这不是完整项目全集，只是当前已建档的单产品样例。
+
 ### 5.2 聚合项目
 
-适用项目：
+当前已建档样例：
 
 - `160`
 - `170`
@@ -201,9 +246,11 @@ node scripts/run_sql_via_ws.js 123 /absolute/path/to/query.sql
 - 必须先加产品过滤条件
 - 不允许直接对整个项目裸跑业务数据
 
+后续如果出现新的聚合项目，也按这一类处理，不以 `160 / 170` 为限。
+
 ### 5.3 特殊项目
 
-适用项目：
+当前已建档样例：
 
 - `171`
 
@@ -229,13 +276,18 @@ node scripts/run_sql_via_ws.js 123 /absolute/path/to/query.sql
 - 找测试包/历史包
 - 找投放或渠道字段
 
-优先顺序：
+候选优先顺序：
 
 1. `bundle_id`
 2. `ub_app_package_name`
 3. `campaign_name`
 4. `media_source`
 5. 其他可疑识别字段
+
+说明：
+
+- 这是当前高频候选字段顺序，不是所有项目都必须按这个顺序命中。
+- 如果第 1 组明显无效，应立即扩展探查，不要被 `bundle_id` 绑住。
 
 ### 6.2 第 2 组：事件表事件分布
 
